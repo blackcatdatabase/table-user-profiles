@@ -55,7 +55,7 @@ erDiagram
     JSON encryption_meta
     DATETIME(6) updated_at
   }
-  USER_PROFILES }o--|| USERS : (user_id)
+  USER_PROFILES }o--|| USERS : "user_id"
 ```
 
 ## Indexes
