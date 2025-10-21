@@ -2,7 +2,7 @@
 
 ![SQL](https://img.shields.io/badge/SQL-MySQL%208.0%2B-4479A1?logo=mysql&logoColor=white) ![License](https://img.shields.io/badge/license-BlackCat%20Proprietary-red) ![Status](https://img.shields.io/badge/status-stable-informational) ![Generated](https://img.shields.io/badge/generated-from%20schema--map-blue)
 
-> Schema package for table **user_profiles** (repo: $slug).
+> Schema package for table **user_profiles** (repo: `user-profiles`).
 
 ## Files
 ```
@@ -49,11 +49,11 @@ mysql -h 127.0.0.1 -P 3307 -u root -proot app < schema/030_foreign_keys.sql
 ```mermaid
 erDiagram
   USER_PROFILES {
-    BIGINT user_id PK
-    LONGBLOB profile_enc
-    VARCHAR(64) key_version
+    INT user_id PK
+    BLOB profile_enc
+    VARCHAR key_version
     JSON encryption_meta
-    DATETIME(6) updated_at
+    DATETIME updated_at
   }
   USER_PROFILES }o--|| USERS : "user_id"
 ```
