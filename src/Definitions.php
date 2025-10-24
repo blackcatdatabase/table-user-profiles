@@ -6,7 +6,7 @@ namespace BlackCat\Database\Packages\UserProfiles;
 final class Definitions {
     // --- základní metadata ---
     public static function table(): string { return 'user_profiles'; }
-    public static function contractView(): string { return 'v_user_profiles_contract'; }
+    public static function contractView(): string { return 'vw_user_profiles'; }
     /** @return string[] */
     public static function columns(): array { return [ 'user_id', 'profile_enc', 'key_version', 'encryption_meta', 'updated_at' ]; }
     public static function pk(): string { return 'user_id'; }

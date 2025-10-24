@@ -1,5 +1,6 @@
--- Auto-generated from schema-map.psd1 (map@6cefe8e)
--- table: user_profiles
+-- Auto-generated from schema-map-mysql.psd1 (map@mtime:2025-10-24T09:13:35Z)
+-- engine: mysql
+-- table:  user_profiles
 CREATE TABLE IF NOT EXISTS user_profiles (
   user_id BIGINT UNSIGNED PRIMARY KEY,
   profile_enc LONGBLOB NULL,
