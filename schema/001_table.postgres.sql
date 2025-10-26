@@ -1,4 +1,4 @@
--- Auto-generated from schema-map-postgres.psd1 (map@mtime:2025-10-24T09:46:38Z)
+-- Auto-generated from schema-map-postgres.psd1 (map@38d5403)
 -- engine: postgres
 -- table:  user_profiles
 CREATE TABLE IF NOT EXISTS user_profiles (
@@ -6,5 +6,7 @@ CREATE TABLE IF NOT EXISTS user_profiles (
   profile_enc BYTEA NULL,
   key_version VARCHAR(64) NULL,
   encryption_meta JSONB NULL,
-  updated_at TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+  updated_at TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  version INTEGER NOT NULL DEFAULT 0,
+  CONSTRAINT chk_user_profiles_version CHECK (version >= 0)
 );
