@@ -1,4 +1,4 @@
--- Auto-generated from schema-views-postgres.psd1 (map@c5e4097)
+-- Auto-generated from schema-views-postgres.psd1 (map@db2f8b8)
 -- engine: postgres
 -- table:  user_profiles
 -- Contract view for [user_profiles]
@@ -10,5 +10,5 @@ SELECT
   encryption_meta,
   updated_at,
   version,
-  encode(profile_enc, 'hex') AS profile_enc_hex
+  UPPER(encode(profile_enc,'hex'))::char(64) AS profile_enc_hex
 FROM user_profiles;
