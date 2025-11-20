@@ -2,7 +2,7 @@
 
 ![SQL](https://img.shields.io/badge/SQL-MySQL%208.0%2B-4479A1?logo=mysql&logoColor=white) ![License](https://img.shields.io/badge/license-BlackCat%20Proprietary-red) ![Status](https://img.shields.io/badge/status-stable-informational) ![Generated](https://img.shields.io/badge/generated-from%20schema--map-blue)
 
-<!-- Auto-generated from schema-map.psd1 @ 6cefe8e (2025-10-22T20:27:41+02:00) -->
+<!-- Auto-generated from schema-map-postgres.psd1 @ 62c9c93 (2025-11-20T21:38:11+01:00) -->
 
 > Schema package for table **user_profiles** (repo: `user-profiles`).
 
@@ -39,11 +39,12 @@ mysql -h 127.0.0.1 -P 3307 -u root -proot app < schema/030_foreign_keys.sql
 ## Columns
 | Column | Type | Null | Default | Extra |
 |-------:|:-----|:----:|:--------|:------|
-| user_id | BIGINT UNSIGNED | — | — | PK |
-| profile_enc | LONGBLOB | YES | — |  |
+| user_id | BIGINT | — | — | PK |
+| profile_enc | BYTEA | YES | — |  |
 | key_version | VARCHAR(64) | YES | — |  |
-| encryption_meta | JSON | YES | — |  |
-| updated_at | DATETIME(6) | NO | CURRENT_TIMESTAMP(6) |  |
+| encryption_meta | JSONB | YES | — |  |
+| updated_at | TIMESTAMPTZ(6) | NO | CURRENT_TIMESTAMP(6) |  |
+| version | INTEGER | NO | 0 |  |
 
 ## Relationships
 - FK → **users** via (user_id) (ON DELETE CASCADE).
@@ -52,10 +53,11 @@ mysql -h 127.0.0.1 -P 3307 -u root -proot app < schema/030_foreign_keys.sql
 erDiagram
   USER_PROFILES {
     INT user_id PK
-    BLOB profile_enc
+    BYTEA profile_enc
     VARCHAR key_version
-    JSON encryption_meta
-    DATETIME updated_at
+    JSONB encryption_meta
+    TIMESTAMPTZ updated_at
+    INTEGER version
   }
   USER_PROFILES }o--|| USERS : "user_id"
 ```
