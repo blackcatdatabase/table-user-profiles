@@ -2,7 +2,7 @@
 -- engine: postgres
 -- table:  user_profiles
 -- Contract view for [user_profiles]
--- Omits large encrypted profile blob by default.
+-- Includes encrypted profile blob + hex helper for debugging.
 CREATE OR REPLACE VIEW vw_user_profiles AS
 SELECT
   user_id,
@@ -10,5 +10,6 @@ SELECT
   encryption_meta,
   updated_at,
   version,
-  UPPER(encode(profile_enc,'hex'))::char(64) AS profile_enc_hex
+  profile_enc,
+  UPPER(encode(profile_enc,'hex')) AS profile_enc_hex
 FROM user_profiles;
