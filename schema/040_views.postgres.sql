@@ -1,6 +1,7 @@
--- Auto-generated from schema-views-postgres.psd1 (map@62c9c93)
+-- Auto-generated from schema-views-postgres.psd1 (map@mtime:2025-11-27T15:36:13Z)
 -- engine: postgres
 -- table:  user_profiles
+
 -- Contract view for [user_profiles]
 -- Includes encrypted profile blob + hex helper for debugging.
 CREATE OR REPLACE VIEW vw_user_profiles AS

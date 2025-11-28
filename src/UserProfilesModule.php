@@ -32,15 +32,41 @@ final class UserProfilesModule implements ModuleInterface
         $table = SqlIdentifier::qi($db, $this->table());
         $view  = SqlIdentifier::qi($db, self::contractView());
 
+        if ($d->isMysql()) {
+            $createViewSql = <<<'SQL'
+CREATE OR REPLACE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW vw_user_profiles AS
+SELECT
+  user_id,
+  key_version,
+  encryption_meta,
+  updated_at,
+  version,
+  profile_enc,
+  CAST(UPPER(SHA2(profile_enc, 256)) AS CHAR(64)) AS profile_enc_hex
+FROM user_profiles;
+SQL;
+        } else {
+            $createViewSql = <<<'SQL'
+CREATE OR REPLACE VIEW vw_user_profiles AS
+SELECT
+  user_id,
+  key_version,
+  encryption_meta,
+  updated_at,
+  version,
+  profile_enc,
+  UPPER(encode(profile_enc,'hex')) AS profile_enc_hex
+FROM user_profiles;
+SQL;
+        }
+
         if (\class_exists('\\BlackCat\\Database\\Support\\DdlGuard')) {
-            (new \BlackCat\Database\Support\DdlGuard($db, $d))->applyCreateView(
-                "CREATE VIEW {$view} AS SELECT * FROM {$table}"
-            );
+            (new \BlackCat\Database\Support\DdlGuard($db, $d))->applyCreateView($createViewSql);
         } else {
             // Prefer CREATE OR REPLACE VIEW (gentle on dependencies)
-            $sql = "CREATE OR REPLACE VIEW {$view} AS SELECT * FROM {$table}";
-            $db->exec($sql);
+            $db->exec($createViewSql);
         }
+
     }
 
     public function upgrade(Database $db, SqlDialect $d, string $from): void
@@ -69,6 +95,13 @@ final class UserProfilesModule implements ModuleInterface
 
         // Quick index/FK check – generator injects names (case-sensitive per DB)
         $expectedIdx = [];
+        if ($d->isMysql()) {
+            // Drop PG-only index naming patterns (e.g., GIN/GiST)
+            $expectedIdx = array_values(array_filter(
+                $expectedIdx,
+                static fn(string $n): bool => !str_starts_with($n, 'gin_') && !str_starts_with($n, 'gist_')
+            ));
+        }
         $expectedFk  = [ 'fk_user_profiles_user' ];
 
         $haveIdx = $hasTable ? SchemaIntrospector::listIndexes($db, $d, $table)     : [];

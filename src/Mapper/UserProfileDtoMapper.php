@@ -17,7 +17,7 @@ use BlackCat\Database\Support\DtoHydrator;
 final class UserProfileDtoMapper
 {
     /** @var array<string,string> Column -> DTO property */
-    private const COL_TO_PROP = [ 'user_id' => 'userId', 'profile_enc' => 'profileEnc', 'key_version' => 'keyVersion', 'encryption_meta' => 'encryptionMeta', 'updated_at' => 'updatedAt' ];
+    private const COL_TO_PROP = [ 'user_id' => 'userId', 'profile_enc' => 'profileEnc', 'key_version' => 'keyVersion', 'encryption_meta' => 'encryptionMeta', 'updated_at' => 'updatedAt', 'version' => 'version' ];
 
     /** @var string[] */
     private const BOOL_COLS   = [];
