@@ -17,7 +17,7 @@ use BlackCat\Database\Support\DtoHydrator;
 final class UserProfileDtoMapper
 {
     /** @var array<string,string> Column -> DTO property */
-    private const COL_TO_PROP = [ 'user_id' => 'userId', 'profile_enc' => 'profileEnc', 'key_version' => 'keyVersion', 'encryption_meta' => 'encryptionMeta', 'updated_at' => 'updatedAt' ];
+    private const COL_TO_PROP = [ 'user_id' => 'userId', 'profile_enc' => 'profileEnc', 'key_version' => 'keyVersion', 'encryption_meta' => 'encryptionMeta', 'updated_at' => 'updatedAt', 'version' => 'version' ];
 
     /** @var string[] */
     private const BOOL_COLS   = [];
@@ -39,13 +39,8 @@ final class UserProfileDtoMapper
 
     private static function tz(): DateTimeZone
     {
-        if (self::$tzObj instanceof DateTimeZone) {
-            return self::$tzObj;
-        }
-        try {
+        if (!(self::$tzObj instanceof DateTimeZone)) {
             self::$tzObj = new DateTimeZone(self::TZ);
-        } catch (\Throwable) {
-            self::$tzObj = new DateTimeZone('UTC');
         }
         return self::$tzObj;
     }
