@@ -5,10 +5,10 @@ Encrypted user profile blob (optional).
 ## Columns
 | Column | Type | Null | Default | Description |
 | --- | --- | --- | --- | --- |
-| encryption_meta | JSONB | YES |  | JSON meta of encryption. |
+| encryption_meta | JSON | YES |  | JSON meta of encryption. |
 | key_version | VARCHAR(64) | YES |  | Key version for profile_enc. |
-| profile_enc | BYTEA | YES |  | Encrypted profile payload. |
-| updated_at | TIMESTAMPTZ(6) | NO | CURRENT_TIMESTAMP(6) | Last update timestamp (UTC). |
+| profile_enc | LONGBLOB | YES |  | Encrypted profile payload. |
+| updated_at | DATETIME(6) | NO | CURRENT_TIMESTAMP(6) | Last update timestamp (UTC). |
 | user_id | BIGINT | NO |  | User (FK users.id), also PK. |
 
 ## Engine Details
@@ -32,5 +32,5 @@ Foreign keys:
 ## Views
 | View | Engine | Flags | File |
 | --- | --- | --- | --- |
-| vw_user_profiles | mysql | algorithm=MERGE, security=INVOKER | [packages\user-profiles\schema\040_views.mysql.sql](https://github.com/blackcatacademy/blackcat-database/packages/user-profiles/schema/040_views.mysql.sql) |
-| vw_user_profiles | postgres |  | [packages\user-profiles\schema\040_views.postgres.sql](https://github.com/blackcatacademy/blackcat-database/packages/user-profiles/schema/040_views.postgres.sql) |
+| vw_user_profiles | mysql | algorithm=MERGE, security=INVOKER | [schema\040_views.mysql.sql](schema\040_views.mysql.sql) |
+| vw_user_profiles | postgres |  | [schema\040_views.postgres.sql](schema\040_views.postgres.sql) |
