@@ -1,0 +1,31 @@
+{
+  "tables": {
+    "user_profiles": {
+      "columns": {
+        "encryption_meta": {
+          "strategy": "passthrough"
+        },
+        "key_version": {
+          "strategy": "passthrough"
+        },
+        "profile_enc": {
+          "context": "db.vault.user_profiles.profile_enc",
+          "encryption_meta_column": "encryption_meta",
+          "key_version_column": "key_version",
+          "strategy": "encrypt",
+          "write_encryption_meta": true,
+          "write_key_version": true
+        },
+        "updated_at": {
+          "strategy": "passthrough"
+        },
+        "user_id": {
+          "strategy": "passthrough"
+        },
+        "version": {
+          "strategy": "passthrough"
+        }
+      }
+    }
+  }
+}
